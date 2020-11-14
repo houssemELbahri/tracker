@@ -24,7 +24,14 @@ const SignupScreen = ({navigation}) => {
             />
             <Button 
                 title="Go to sign in "
-                onPress={() => signUp({email, password})}
+                onPress={ async() => {
+                    try {
+                        await signUp({email, password});
+                        navigation.navigate("signin");
+                    } catch (error) {
+                        console.log(error);
+                    }
+                }}
             />
         </View>
     );

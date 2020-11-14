@@ -9,7 +9,7 @@ const SignupScreen = ({navigation}) => {
 
     return (
         <View style={styles.mainContainer}>
-            <Text>Signup Screen</Text>
+            <Text>Signin Screen</Text>
             <Button 
                 title="Back to sign up "
                 onPress={() => navigation.goBack()}

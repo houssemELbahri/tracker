@@ -26,7 +26,7 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 import { NavigationContainer } from '@react-navigation/native';
-import {AsyncStorage} from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-community/async-storage';
 import { AuthContext } from './components/Context';
 
 import {RootNavigator, MainNavigator} from './navigation/Navigation';
@@ -76,23 +76,18 @@ const App: () => React$Node = () => {
 const [loginState, dispatch] = React.useReducer(loginReducer, initialLoginState);
 
 const authContext = React.useMemo(() => ({
-  signIn: async(foundUser) => {
-    // setUserToken('fgkj');
-    // setIsLoading(false);
-    //const userToken = String(foundUser[0].userToken);
-    //const userName = foundUser[0].username;
+  signIn: async({email, password}) => {
+    
     
     try {
       await AsyncStorage.setItem('userToken', userToken);
     } catch(e) {
       console.log(e);
     }
-    // console.log('user token: ', userToken);
     dispatch({ type: 'LOGIN', id: userName, token: userToken });
   },
   signOut: async() => {
-    // setUserToken(null);
-    // setIsLoading(false);
+    
     try {
       await AsyncStorage.removeItem('userToken');
     } catch(e) {
@@ -100,12 +95,14 @@ const authContext = React.useMemo(() => ({
     }
     dispatch({ type: 'LOGOUT' });
   },
-  signUp: async(email, password) => {
+  signUp: async({email, password}) => {
+    console.log("my email is ",email, "and my password",password);
     try{
-      const response = await trackerApi.post('/signup', { email, password});
-      console.log(response.data);
+      const response = await trackerApi.post('/signup', { email, password });
+      await AsyncStorage.setItem('token', response.data.token);
+      //dispatch({ type: 'signup', token: token });
     } catch(err){
-      console.log('taraji ya dawla');
+      console.log('you are in the catch bloc');
       console.log(err.message);
     }
   },
