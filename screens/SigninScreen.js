@@ -1,7 +1,12 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 
+import { AuthContext } from '../components/Context';
+
 const SignupScreen = ({navigation}) => {
+
+    const { signIn } = React.useContext(AuthContext);
+
     return (
         <View style={styles.mainContainer}>
             <Text>Signup Screen</Text>
